@@ -10,29 +10,28 @@ public class Functions
 
     public static <A> Function<A, A> identity()
     {
-        return notImplemented();
+        return a -> a;
     }
 
 
     public static <A, B, C> Function<A, C> compose(Function<A, B> f, Function<B, C> g)
     {
-        return notImplemented();
+        return b -> g.apply(f.apply(b));
     }
 
-    public static <A, B, C> Function<A, Function<B, C>>  curry(BiFunction<A, B, C> f)
+    public static <A, B, C> Function<A, Function<B, C>> curry(BiFunction<A, B, C> f)
     {
-        return notImplemented();
+        return a -> b -> f.apply(a,b);
     }
 
     public static <A, B> Function<A, B> constt(B b)
     {
-        return notImplemented();
+
+        return a -> b;
     }
 
-    public static <A, B,C> BiFunction<A, B, C> uncurry(Function<A, Function<B, C>> f)
-    {
-        return notImplemented();
+    public static <A, B, C> BiFunction<A, B, C> uncurry(Function<A, Function<B, C>> f) {
+        return (a, b) -> f.apply(a).apply(b);
     }
-
 
 }
