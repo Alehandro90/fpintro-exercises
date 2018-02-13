@@ -160,4 +160,5 @@ public class ConslistTest
     {
         assertEquals(EMPTY, EMPTY.map(FUNCTION));
     }
+
 }

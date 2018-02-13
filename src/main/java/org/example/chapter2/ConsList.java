@@ -1,9 +1,8 @@
 package org.example.chapter2;
 
-import java.io.File;
 import java.util.function.Function;
-
 import static org.example.Util.error;
+import static org.example.Util.notImplemented;
 
 public abstract class ConsList<A> {
     public static <A> ConsList<A> empty() {
@@ -14,19 +13,13 @@ public abstract class ConsList<A> {
         return new Cons<>(head, tail);
     }
 
-    public abstract int length();
-
-    public abstract ConsList<A> append(A element);
-
-    public abstract ConsList<A> reverse();
-
     public abstract ConsList<A> takeWhile(Function<A, Boolean> condition);
 
     public abstract ConsList<A> dropWhile(Function<A, Boolean> condition);
 
     public abstract ConsList<A> filter(Function<A, Boolean> condition);
 
-    public abstract ConsList<A> map(Function<A, A> condition);
+    public abstract <B> ConsList<B> map(Function<A, B> function);
 
     public abstract boolean isEmpty();
 
@@ -34,14 +27,27 @@ public abstract class ConsList<A> {
 
     public abstract ConsList<A> tail();
 
+
+    public int length() {
+        return notImplemented();
+    }
+
+    public ConsList<A> append(A a) {
+        return notImplemented();
+    }
+
+    public ConsList<A> reverse() {
+        return notImplemented();
+    }
+
+
     @Override
     public int hashCode() {
         return super.hashCode();
     }
 
     @Override
-    public boolean equals(Object o)
-    {
+    public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -50,21 +56,18 @@ public abstract class ConsList<A> {
 
         if (this.length() != otherIter.length()) return false;
 
-        while (!thisIter.isEmpty())
-        {
-            if (thisIter.head() == otherIter.head())
-            {
+        while (!thisIter.isEmpty()) {
+            if (thisIter.head() == otherIter.head()) {
                 thisIter = thisIter.tail();
                 otherIter = otherIter.tail();
-            }
-            else
-            {
+            } else {
                 return false;
             }
         }
 
         return true;
     }
+
 
     private static final class Cons<A> extends ConsList<A> {
         public final A head;
@@ -112,7 +115,7 @@ public abstract class ConsList<A> {
         }
 
         @Override
-        public ConsList<A> map(Function<A, A> function) {
+        public <B> ConsList<B> map(Function<A, B> function) {
 
             return cons(function.apply(head), tail.map(function));
         }
@@ -169,7 +172,7 @@ public abstract class ConsList<A> {
         }
 
         @Override
-        public ConsList<A> map(Function<A, A> function) {
+        public <B> ConsList<B> map(Function<A, B> function) {
             return empty();
         }
 
