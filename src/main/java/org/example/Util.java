@@ -11,4 +11,9 @@ public class Util
     {
         return new Error(error);
     }
+
+    public static void println(Object o)
+    {
+        System.out.println(o);
+    }
 }
