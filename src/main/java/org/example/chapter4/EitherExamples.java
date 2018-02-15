@@ -37,7 +37,7 @@ public class EitherExamples
         Either<String, Integer> mapped = lp.map(x -> x + x);
         System.out.println(mapped);
         Either<String, Integer> mapped2 = e1.right().map(x -> x * 4);
-        System.out.println(mapped2);
+        System.out.println("Test:" + mapped2);
 
         //same for right
         Either<String, Integer> mapped3 = e2.right().map(x -> x - 20);
@@ -57,7 +57,8 @@ public class EitherExamples
             }
         });
 
-        System.out.println(bind);
+        Either<String, Short> binded = bind;
+        System.out.println("here!" + bind);
 
         // imperatively get a value out of an either
 
