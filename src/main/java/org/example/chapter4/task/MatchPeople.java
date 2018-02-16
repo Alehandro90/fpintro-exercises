@@ -1,5 +1,9 @@
 package org.example.chapter4.task;
 
+import fj.F;
+import fj.P;
+import fj.P2;
+import fj.data.Either;
 import fj.data.List;
 import fj.data.Validation;
 
@@ -18,23 +22,24 @@ public class MatchPeople {
 
         Validation<List<String>, Person> person2 = unsafeReadPerson(scanner);
 
-        System.out.println(checkMatch(person, person2));
+        Validation<List<String>, Match> matchingObjV = checkMatch(person, person2);
+
+        if(matchingObjV.isSuccess()) {
+            System.out.println("Persons ids: " + matchingObjV.success().id1 + " " + matchingObjV.success().id2);
+        } else {
+            System.out.println(matchingObjV.fail());
+        }
 
     }
 
-    public static List<List<String>> checkMatch(Validation<List<String>, Person> person, Validation<List<String>, Person> person2) {
+    public static Validation<List<String>, Match>  checkMatch(Validation<List<String>, Person> person, Validation<List<String>, Person> person2) {
 
-        Validation<List<List<String>>, Validation<String, Match>> accumulateV = person.accumulate(person2, MatchPeople::match);
+        Validation<List<List<String>>, P2<Person, Person>> tmp = person.accumulate(person2, (p1, p2) -> P.p(p1, p2));
 
-        if (accumulateV.isFail()) {
-            return accumulateV.fail();
-        }
+        Validation<List<String>, P2<Person, Person>> productV = leftMap(tmp, xxs -> List.join(xxs));
 
-        if (accumulateV.success().isFail()) {
-            return List.single(List.single(accumulateV.success().fail()));
-        }
+        return productV.bind(p -> leftMap(match(p._1(), p._2()), single -> List.single(single)));
 
-        return List.single(List.single("Persons ids: " + accumulateV.success().success().id1 + " " + accumulateV.success().success().id2));
 
     }
 
@@ -77,7 +82,7 @@ public class MatchPeople {
             try {
                 return success(Integer.parseInt(x));
             } catch (NumberFormatException e) {
-                return fail(e.getMessage() + " for argument " + str);
+                return fail(e.getMessage());
             }
         });
 
@@ -99,7 +104,7 @@ public class MatchPeople {
             try {
                 return success(Gender.valueOf(x));
             } catch (IllegalArgumentException e) {
-                return fail(e.getMessage() + " for gender ");
+                return fail(e.getMessage());
             }
         });
     }
@@ -126,4 +131,12 @@ public class MatchPeople {
                 unsafeReadConsole(s, "gender")
         );
     }
+
+    public static <E, A, E1> Validation<E1, A> leftMap(Validation<E, A> v, F<E, E1> errTransform)
+    {
+        Either<E, A> either = v.toEither();
+        Either<E1, A> mapped = either.left().map(errTransform);
+        return Validation.validation(mapped);
+    }
+
 }

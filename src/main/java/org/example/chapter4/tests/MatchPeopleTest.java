@@ -2,6 +2,7 @@ package org.example.chapter4.tests;
 
 import fj.data.List;
 import fj.data.Validation;
+import org.example.chapter4.task.Match;
 import org.example.chapter4.task.MatchPeople;
 import org.example.chapter4.task.Person;
 import org.junit.Test;
@@ -57,8 +58,10 @@ public class MatchPeopleTest {
         Validation<List<String>, Person> person2V = MatchPeople.createPerson("1", "Angela", "33", "FEMALE");
         Validation<List<String>, Person> person3V = MatchPeople.createPerson("1", "Angelo", "33", "OTHER");
 
-        assertEquals("Persons ids: " + personV.success().id + " " + person2V.success().id, MatchPeople.checkMatch(personV, person2V).head().head());
-        assertEquals("Not matching genders", MatchPeople.checkMatch(personV, personV).head().head());
-        assertEquals("Not matching genders", MatchPeople.checkMatch(personV, person3V).head().head());
+        Match successV = MatchPeople.checkMatch(personV, person2V).success();
+
+        assertEquals(personV.success().id + " " + person2V.success().id, successV.id1 + " " + successV.id2);
+        assertEquals("Not matching genders", MatchPeople.checkMatch(personV, personV).fail().head());
+        assertEquals("Not matching genders", MatchPeople.checkMatch(personV, person3V).fail().head());
     }
 }
