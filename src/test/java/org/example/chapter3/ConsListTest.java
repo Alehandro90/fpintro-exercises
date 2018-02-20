@@ -1,18 +1,12 @@
-package org.example.chapter3.tests;
+package org.example.chapter3;
 
-import org.example.chapter3.ConsList;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.function.Function;
+import static org.junit.Assert.*;
 
-import static junit.framework.TestCase.assertTrue;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+public class ConsListTest {
 
-
-public class FoldTests
-{
     private static int NUM = 5;
     private ConsList<Integer> EMPTY;
     private ConsList<Integer> ONE_ELEM;

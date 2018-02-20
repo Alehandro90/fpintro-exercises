@@ -1,17 +1,12 @@
-package org.example.chapter4.tests;
+package org.example.chapter4.task;
 
 import fj.data.List;
 import fj.data.Validation;
-import org.example.chapter4.task.Match;
-import org.example.chapter4.task.MatchPeople;
-import org.example.chapter4.task.Person;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class MatchPeopleTest {
-
 
     @Test
     public void testValidPositiveNumber() {

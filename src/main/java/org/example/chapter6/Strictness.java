@@ -7,6 +7,7 @@ import fj.function.Effect0;
 import fj.function.Effect1;
 import fj.function.Try0;
 import fj.function.TryEffect0;
+import org.example.chapter7.ReadFromConsole;
 
 import static fj.P.lazy;
 import static org.example.Util.println;
@@ -49,7 +50,7 @@ public class Strictness
 
         F1W<Integer, Integer> ff = F1W.lift(Strictness::bar);
         F1W<Integer, Integer> mapped = ff.map(a -> a + 3);
-        System.out.println(mapped.f(2));
+        System.out.println("Here" + mapped.f(2));
 
         P1<Integer> foo = lazy(Strictness::foo);
         P1<Integer> twice = foo.map(a -> a * 2);

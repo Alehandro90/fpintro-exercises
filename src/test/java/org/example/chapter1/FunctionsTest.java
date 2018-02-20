@@ -1,14 +1,13 @@
-package org.example.chapter1.tests;
+package org.example.chapter1;
 
-import org.example.chapter1.Functions;
 import org.junit.Test;
 
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
-public final class FunctionsTest {
+public class FunctionsTest {
 
     public static final Function<Integer, Integer> COMPOSE_FUNC_A = a -> a;
     public static final Function<Integer, Integer> COMPOSE_FUNC_B = b -> b * 2;
@@ -27,7 +26,7 @@ public final class FunctionsTest {
     @Test
     public void curryFunctions() {
 
-    assertEquals(6, Functions.curry(CURRY_FUNCTION).apply(2).apply(4).intValue());
+        assertEquals(6, Functions.curry(CURRY_FUNCTION).apply(2).apply(4).intValue());
     }
 
     @Test

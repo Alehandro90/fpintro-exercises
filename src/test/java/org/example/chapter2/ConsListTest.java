@@ -1,17 +1,14 @@
-package org.example.chapter2.tests;
+package org.example.chapter2;
 
-import org.example.chapter2.ConsList;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.function.Function;
 
-import static junit.framework.TestCase.assertTrue;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.*;
 
+public class ConsListTest {
 
-public class ConslistTest {
     private static int NUM = 5;
     private static Function<Integer, Boolean> PREDICATE = x -> x <= 2;
     private static Function<Integer, Integer> FUNCTION = x -> x * 3;
