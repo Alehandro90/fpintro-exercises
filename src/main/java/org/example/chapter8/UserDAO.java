@@ -47,9 +47,9 @@ public final class UserDAO {
 
         //given a regular operation which returns an iterable:
         DB<List<UserStuff>> temp = new SelectOp.FjList<>(
-                "SELECT NAME, EMAIL, PASSWORD FROM USERS WHERE ID=?",
+                "SELECT NAME, EMAIL FROM USERS WHERE ID=?",
                 ps -> ps.setInt(1, id),
-                rs -> new UserStuff(id, rs.getString(1), rs.getString(2), rs.getString(3)));
+                rs -> new UserStuff(id, rs.getString(1), rs.getString(2)));
 
         // using the unique() function,
         // we can convert it to an operation which expects at most one result, and returns that optional result:
@@ -61,9 +61,9 @@ public final class UserDAO {
 
         //given a regular operation which returns an iterable:
         DB<List<UserStuff>> temp = new SelectOp.FjList<>(
-                "SELECT ID, NAME, PASSWORD FROM USERS WHERE EMAIL=?",
+                "SELECT ID, NAME FROM USERS WHERE EMAIL=?",
                 ps -> ps.setString(1, email),
-                rs -> new UserStuff(rs.getInt(1), rs.getString(2), email, rs.getString(3)));
+                rs -> new UserStuff(rs.getInt(1), rs.getString(2), email));
 
         // using the unique() function,
         // we can convert it to an operation which expects at most one result, and returns that optional result:
